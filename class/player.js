@@ -57,6 +57,13 @@ class Player {
 
 	eatItem(itemName) {
 		// Fill this in
+		const item = this.getItemByName(itemName);
+		if (item?.isFood) {
+			this.items = this.items.filter((playerItem) => playerItem !== item);
+			console.log(`${this.name} ate ${item.name}.`);
+		} else {
+			console.log(`You cannot eat ${itemName}.`);
+		}
 	}
 
 	getItemByName(name) {
