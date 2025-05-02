@@ -1,10 +1,9 @@
+const { Item } = require("./item");
 
 // FILL THIS OUT
 
-class Food {
-
-}
+class Food extends Item {}
 
 module.exports = {
-  Food,
+	Food,
 };
