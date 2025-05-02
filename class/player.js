@@ -1,58 +1,74 @@
 class Player {
+	constructor(name, startingRoom) {
+		this.name = name;
+		this.currentRoom = startingRoom;
+		this.items = [];
+	}
 
-    constructor(name, startingRoom) {
-        this.name = name;
-        this.currentRoom = startingRoom;
-        this.items = [];
-    }
+	move(direction) {
+		const nextRoom = this.currentRoom.getRoomInDirection(direction);
 
-    move(direction) {
+		// If the next room is valid, set the player to be in that room
+		if (nextRoom) {
+			this.currentRoom = nextRoom;
 
-        const nextRoom = this.currentRoom.getRoomInDirection(direction);
+			nextRoom.printRoom(this);
+		} else {
+			console.log("You cannot move in that direction");
+		}
+	}
 
-        // If the next room is valid, set the player to be in that room
-        if (nextRoom) {
-            this.currentRoom = nextRoom;
+	printInventory() {
+		if (this.items.length === 0) {
+			console.log(`${this.name} is not carrying anything.`);
+		} else {
+			console.log(`${this.name} is carrying:`);
+			for (let i = 0; i < this.items.length; i++) {
+				console.log(`  ${this.items[i].name}`);
+			}
+		}
+	}
 
-            nextRoom.printRoom(this);
-        } else {
-            console.log("You cannot move in that direction");
-        }
-    }
+	takeItem(itemName) {
+		// Fill this in
+		const item = this.currentRoom.getItemByName(itemName);
+		if (item) {
+			this.items.push(item);
+			this.currentRoom.items = this.currentRoom.items.filter(
+				(roomItem) => roomItem !== item,
+			);
+			console.log(`${this.name} took ${item.name}.`);
+		} else {
+			console.log(`There is no ${itemName} in this room.`);
+		}
+	}
 
-    printInventory() {
-        if (this.items.length === 0) {
-            console.log(`${this.name} is not carrying anything.`);
-        } else {
-            console.log(`${this.name} is carrying:`);
-            for (let i = 0 ; i < this.items.length ; i++) {
-                console.log(`  ${this.items[i].name}`);
-            }
-        }
-    }
+	dropItem(itemName) {
+		// Fill this in
+		const item = this.getItemByName(itemName);
+		if (item) {
+			this.currentRoom.items.push(item);
+			this.items = this.items.filter((playerItem) => playerItem !== item);
+			console.log(`${this.name} dropped ${item.name}.`);
+		} else {
+			console.log(`You are not carrying ${itemName}.`);
+		}
+	}
 
-    takeItem(itemName) {
+	eatItem(itemName) {
+		// Fill this in
+	}
 
-        // Fill this in
-
-    }
-
-    dropItem(itemName) {
-
-        // Fill this in
-    }
-
-    eatItem(itemName) {
-        // Fill this in
-
-    }
-
-    getItemByName(name) {
-
-        // Fill this in
-    }
+	getItemByName(name) {
+		// Fill this in
+		const itemIndex = this.items.findIndex((item) => item.name === name);
+		if (itemIndex !== -1) {
+			return this.items[itemIndex];
+		}
+		return null;
+	}
 }
 
 module.exports = {
-  Player,
+	Player,
 };
